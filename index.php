@@ -88,7 +88,7 @@
             echo "<p>" . htmlspecialchars($row['description']) . "</p>";
             echo "<p>Preis: €" . number_format($row['price'], 2) . "</p>";
             if (!empty($row['image_url'])) {
-                echo "<img src='" . htmlspecialchars($row['image_url']) . "' alt='Bild von " . htmlspecialchars($row['name']) . "'>";
+                echo '<img width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($row['image_url']).'"/>';
             }
             echo "</div><hr>";
         }
@@ -102,7 +102,7 @@
     ?>
 
     <!-- Scroll-to-Top Button -->
-    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen" 
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen"
             style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000; padding: 10px 15px;">
         ↑ Nach oben
     </button>
