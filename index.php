@@ -31,8 +31,8 @@
         <!-- Kategorien-Buttons -->
         <nav>
             <a href="index.php">Alle Produkte</a>
-            <a href="index.php?category=Hosen">Hosen</a>
             <a href="index.php?category=Oberteile">Oberteile</a>
+            <a href="index.php?category=Accessoires">Accessoires</a>
             <!-- Weitere Kategorien können hier hinzugefügt werden -->
         </nav>
 
@@ -85,7 +85,6 @@
         while ($row = $result->fetch_assoc()) {
             echo "<div>";
             echo "<h2><a href='product.php?id=" . $row['id'] . "'>" . htmlspecialchars($row['name']) . "</a></h2>";
-            echo "<p>" . htmlspecialchars($row['description']) . "</p>";
             echo "<p>Preis: €" . number_format($row['price'], 2) . "</p>";
             if (!empty($row['image_url'])) {
                 echo '<img width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($row['image_url']).'"/>';

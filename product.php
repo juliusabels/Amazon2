@@ -40,8 +40,9 @@
         <?php if (!empty($product['image_url'])): ?>
             <img src="data:image/jpeg;base64,<?php echo base64_encode($product['image_url']); ?>" alt="Bild von <?php echo htmlspecialchars($product['name']); ?>" width="500" height="500">
         <?php endif; ?>
-    <p><?php echo htmlspecialchars($product['description']); ?></p>
+    <p><?php echo htmlspecialchars_decode($product['description']); ?></p>
     <p>Preis: €<?php echo number_format($product['price'], 2); ?></p>
+    <p><?php echo $product['availability'] ? 'Auf Lager' : 'Derzeit nicht verfügbar'; ?></p>
 
     <!-- Button zum Weiterleiten zur Bestellseite mit der Produkt-ID -->
     <a href="checkout.php?product_id=<?php echo $product['id']; ?>">
