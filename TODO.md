@@ -6,3 +6,8 @@
 - Warenkorb icon
 - Nuterprofil icon
 - Bezahlmethoden auf checkout seite als auswahl knöpfe
+
+Tom:
+-style sortieren und ggf in seperate css datei packen
+-kommentieren
+-code sortieren
