@@ -33,17 +33,20 @@
         <div class="container">
             <div class="text-center">
                 <h1 class="my-3">
-                    <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                    <a href="index.php">
+                        <img class="img-fluid img-thumbnail" style="max-width: 30%"
                             src="./img/logo.jpg"
                             height=50%;
                             alt="Scamazon"
                             loading="lazy" />
+                    </a>
                 </h1>
             </div>
             
             <h1 class="mx-auto text-center">Willkommen bei Fakezon</h1>
             <p  class="mx-auto text-center">Ihr Online-Marktplatz für alles Mögliche!</p>
         </div>
+
         <!-- Kategorien-Buttons -->
         <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
             <div class="container-fluid">
@@ -62,7 +65,7 @@
                         </li>
                     </ul>
                     <form class="d-flex" method="GET" action="index.php">
-                        <input class="form-control me-2" type="text" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                        <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                         <button class="btn btn-outline-success" type="submit">Suchen</button>
                         <i class="fas fa-user"></i>
                     </form>

@@ -43,17 +43,17 @@ $product = $product_result->fetch_assoc();
         <div class="container">
             <div class="text-center">
                 <h1 class="my-3">
-                    <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                    <a href="index.php">
+                        <img class="img-fluid img-thumbnail" style="max-width: 30%"
                             src="./img/hilfe.jpg"
                             height=50%;
                             alt="Scamazon"
                             loading="lazy" />
+                </a>
                 </h1>
             </div>
-            
-            <h1 class="mx-auto text-center">Willkommen bei Fakezon</h1>
-            <p  class="mx-auto text-center">Ihr Online-Marktplatz für alles Mögliche!</p>
         </div>
+        <!-- Kategorien-Buttons -->
         <!-- Kategorien-Buttons -->
         <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
             <div class="container-fluid">
@@ -71,9 +71,10 @@ $product = $product_result->fetch_assoc();
                             <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search" method="GET" action="index.php">
-                        <input class="form-control me-2" type="search" placeholder="Nach Produkten suchen..." aria-label="Search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <form class="d-flex" method="GET" action="index.php">
+                        <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                         <button class="btn btn-outline-success" type="submit">Suchen</button>
+                        <i class="fas fa-user"></i>
                     </form>
                 </div>
             </div>
@@ -127,10 +128,6 @@ $product = $product_result->fetch_assoc();
     <!-- Zurück zur Produktseite -->
     <a href="product.php?id=<?php echo $product_id; ?>">
         <button class="btn btn-secondary mx-2">Zurück zur Produktseite</button>
-    </a>
-    <!-- Zurück zur Startseite -->
-    <a href="index.php">
-        <button class="btn btn-primary mx-2">Zurück zur Startseite</button>
     </a>
 </div>
 
