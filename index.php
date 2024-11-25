@@ -25,6 +25,8 @@
         };
     </script>
 </head>
+
+
 <body class="body">
     <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
     <header>
