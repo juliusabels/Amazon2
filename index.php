@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide" type='text/css'>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="./css/main.css">
 
 
@@ -29,34 +29,38 @@
     <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
     <header>
         <div class="container">
-            <h1 class="mx-auto">Willkommen bei Fakezon</h1>
-            <p>Ihr Online-Marktplatz für alles Mögliche!</p>
+            <div class="text-center">
+                <h1 class="my-3">
+                    <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                            src="./img/logo.jpg"
+                            height=50%;
+                            alt="Scamazon"
+                            loading="lazy" />
+                </h1>
+            </div>
+            
+            <h1 class="mx-auto text-center">Willkommen bei Fakezon</h1>
+            <p  class="mx-auto text-center">Ihr Online-Marktplatz für alles Mögliche!</p>
         </div>
         <!-- Kategorien-Buttons -->
-        <nav class="navbar navbar-expand-md bg-warning p-0 mx-auto">
-            <div class="container-fluid px-5 py-2">
-                <a class="navbar-brand color-black" href="index.php">Alle Produkte</a>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarID"
-                    aria-controls="navbarID"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
+            <div class="container-fluid">
+	            <a class="navbar-brand p-2" href="index.php">Alle Produkte</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarID">
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-link" href="index.php?category=Oberteile">Oberteile</a>
-                        <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
-                        <!-- Weitere Kategorien können hier hinzugefügt werden -->
-                    </div>
 
-                    <!-- Suchformular -->
-                    <form class="d-flex" method="GET" action="index.php">
-                        <input class="form-control mr-2" type="search" name="search" placeholder="Nach Produkten suchen..." 
-                            value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" aria-current="page" href="index.php?category=Oberteile">Oberteile</a>
+                        </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search" method="GET" action="index.php">
+                        <input class="form-control me-2" type="search" placeholder="Nach Produkten suchen..." aria-label="Search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                         <button class="btn btn-outline-success" type="submit">Suchen</button>
                     </form>
                 </div>
@@ -108,13 +112,13 @@
 
                     // Schleife durch die Produkte
                     while ($row = $result->fetch_assoc()) {
-                        echo "<div class='card col mb-4' style='width:18rem;'>";
+                        echo "<div class='card col mb-4 mx-auto bg-secondary' style='width:18rem;'>";
                         if (!empty($row['image_url'])) {
-                            echo '<img class="card-img-top rounded mt-1" alt="Bild konnte nicht geladen werden" width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($row['image_url']).'"/>';
+                            echo '<img class="card-img-top rounded mt-3" alt="Bild konnte nicht geladen werden" width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($row['image_url']).'"/>';
                         }
                         echo "<div class='card-body'>";
                         echo "<h2 class='card-title'><a href='product.php?id=" . $row['id'] . "' >" . htmlspecialchars($row['name']) . "</a></h2>";
-                        echo "<p class='card-footer text-center'>Preis: €" . number_format($row['price'], 2) . "</p>
+                        echo "<p class='card-footer text-center border'>Preis: €" . number_format($row['price'], 2) . "</p>
                             </div>";
                         echo "</div>";
                     }

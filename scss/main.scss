@@ -1,16 +1,30 @@
-$warning: #21FA90;
+$warning: #FAB12F;
+$secondary: #fffcf7;
+
 
 .navbar{
     border-radius: 7px;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
 }
 
+.navbar-brand:hover, .nav-link:hover{
+    background-color: antiquewhite;
+    border-radius: 5px;
+}
+
+#searchForm{
+    min-width: 220px;
+}
+
+
 .body{
-    background-color: lightgrey;
+    background-color: #FEF3E2;
 }
 
 .card{
     background-color: #ebe6e6;
-    width:18rem;
     display:inline-block;
 }
 
