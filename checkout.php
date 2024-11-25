@@ -25,6 +25,7 @@ $product = $product_result->fetch_assoc();
 <html lang="de">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="./css/main.css">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +37,7 @@ $product = $product_result->fetch_assoc();
         }
     </script>
 </head>
+
 <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
 <header>
         <div class="container">

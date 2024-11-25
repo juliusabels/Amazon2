@@ -61,9 +61,10 @@
                             <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search" method="GET" action="index.php">
-                        <input class="form-control me-2" type="search" placeholder="Nach Produkten suchen..." aria-label="Search" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <form class="d-flex" method="GET" action="index.php">
+                        <input class="form-control me-2" type="text" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                         <button class="btn btn-outline-success" type="submit">Suchen</button>
+                        <i class="fas fa-user"></i>
                     </form>
                 </div>
             </div>
@@ -72,6 +73,7 @@
         
     </header>
     
+    <!-- Card Bereich für Produkte -->
     <div  class="container mx-auto mt-4">
         <div class="row row-cols-4">
 
@@ -114,12 +116,12 @@
 
                     // Schleife durch die Produkte
                     while ($row = $result->fetch_assoc()) {
-                        echo "<div class='card col mb-4 mx-auto bg-secondary' style='width:18rem;'>";
+                        echo "<div class='card col mb-4 mx-auto bg-secondary' style='width:18rem;' id='cardHover'>";
                         if (!empty($row['image_url'])) {
-                            echo '<img class="card-img-top rounded mt-3" alt="Bild konnte nicht geladen werden" width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($row['image_url']).'"/>';
+                            echo '<a href="product.php?id=' . $row["id"] . '" ><img class="card-img-top rounded mt-3" alt="Bild konnte nicht geladen werden" width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($row['image_url']).'"/></a>';
                         }
                         echo "<div class='card-body'>";
-                        echo "<h2 class='card-title'><a href='product.php?id=" . $row['id'] . "' >" . htmlspecialchars($row['name']) . "</a></h2>";
+                        echo "<h2 class='card-title text-center'><a href='product.php?id=" . $row['id'] . "' >" . htmlspecialchars($row['name']) . "</a></h2>";
                         echo "<p class='card-footer text-center border'>Preis: €" . number_format($row['price'], 2) . "</p>
                             </div>";
                         echo "</div>";
