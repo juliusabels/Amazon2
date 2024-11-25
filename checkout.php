@@ -34,6 +34,7 @@ $product = $product_result->fetch_assoc();
         // Funktion, um Pop-up mit Bestellnummer anzuzeigen
         function showThankYouPopup(orderNumber) {
             alert("Vielen Dank für Ihre Bestellung! Ihre Bestellnummer ist: " + orderNumber);
+            window.location = 'product.php?id=<?php echo $product_id; ?>';
         }
     </script>
 </head>
