@@ -120,6 +120,18 @@ $product = $product_result->fetch_assoc();
     </form>
 </div>
 
+<!-- Buttons für Zurück zur Produktseite und zur Startseite -->
+<div class="text-center my-4">
+    <!-- Zurück zur Produktseite -->
+    <a href="product.php?id=<?php echo $product_id; ?>">
+        <button class="btn btn-secondary mx-2">Zurück zur Produktseite</button>
+    </a>
+    <!-- Zurück zur Startseite -->
+    <a href="index.php">
+        <button class="btn btn-primary mx-2">Zurück zur Startseite</button>
+    </a>
+</div>
+
 <?php
 // Überprüfen, ob das Formular abgeschickt wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -156,10 +168,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<p>Die Bestellung konnte nicht bearbeitet werden. Bitte versuchen Sie es später erneut.</p>";
     }
-} else {
-?>
-    
-<?php
 }
 ?>
 
