@@ -19,6 +19,11 @@
   background-color: #FEF3E2;
 }
 
+.my-50 {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 .card {
   background-color: #ebe6e6;
   display: inline-block;
@@ -41,6 +46,12 @@
   right: 20px;
   z-index: 1000;
   padding: 10px 15px;
+}
+
+.productSimilar {
+  text-decoration: none !important;
+  color: darkslategray;
+  background-color: #ebe6e6;
 }
 
 /*!
