@@ -163,9 +163,12 @@
         </div>
     </div>
 
-    
-
-    
+    <!-- Zurück-zur-Startseite Button -->
+    <div class="text-center my-4">
+        <a href="index.php">
+            <button class="btn btn-primary">Zurück zur Startseite</button>
+        </a>
+    </div>
 
      <!-- Scroll-to-Top Button -->
      <button class="btn btn-danger btn-floating btn-lg" onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen">
