@@ -101,7 +101,7 @@
             </div>
         </nav>
 
-        
+
     </header>
 
 
@@ -132,6 +132,23 @@
                             <div class="text-muted">
                                 <?php echo $product['availability'] ? 'Auf Lager' : 'Derzeit nicht verfügbar'; ?>
                             </div>
+                            <?php
+                            $ratings_sql = "SELECT rating FROM ratings WHERE productId = $product_id";
+                            $ratings = $conn->query($ratings_sql);
+
+                            if ($ratings->num_rows > 0) {
+                                $rating_sum = 0;
+                                foreach ($ratings as $rating) {
+                                    $rating_sum += $rating['rating'];
+                                }
+                                $average_rating = $rating_sum / $ratings->num_rows;
+                                echo "<p>Bewertung: " . number_format($average_rating, 1) . "/5</p>";
+                                echo "<p>Anzahl der Bewertungen " . $ratings->num_rows . " </p>";
+                            }
+
+                            ?>
+
+
                             <!-- Button zum Weiterleiten zur Bestellseite mit der Produkt-ID -->
                             <a href="checkout.php?product_id=<?php echo $product['id']; ?>">
                                 <button class="btn btn-warning mt-4 mb-2 text-shite" type="button">Kaufen</button>
@@ -149,7 +166,7 @@
 
                                     if ($similar_result->num_rows > 0) {
                                         while ($similar_product = $similar_result->fetch_assoc()) {
-//Youns vielleicht noch Bilder einfügen                                       
+//Julius vielleicht noch Bilder einfügen
                                             echo "<br><p> <a class='productSimilar rounded p-2 my-4 mx-2' href='product.php?id=" . $similar_product['id'] . "'>" . htmlspecialchars($similar_product['name']) . "</a></p>";
                                         }
                                     } else {
@@ -179,6 +196,27 @@
     <footer class="container border-top border-dark py-2">
         <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
     </footer>
+
+    <!-- Rezensionen -->
+    <h2>Rezensionen</h2>
+    <?php
+        $ratings_sql = "SELECT id, userId, rating, comment, date FROM ratings WHERE productId = $product_id";
+        $ratings = $conn->query($ratings_sql);
+
+        if ($ratings->num_rows > 0) {
+            while ($rating = $ratings->fetch_assoc()) {
+                $user_sql = "SELECT username, profile_picture FROM users WHERE id = " . $rating['userId'];
+                $user = $conn->query($user_sql)->fetch_assoc();
+
+                $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . base64_encode($user['profile_picture']) : "img/unknown_user.png";
+                echo "<img src='$pfp' alt='Bild von " . htmlspecialchars($user['username']) . "'>" . "<p><strong>" . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
+                echo "<p>" . htmlspecialchars($rating['comment']) . " - Hier Datum soon" . "</p>";
+            }
+        } else {
+            echo "<p>Keine Rezensionen verfügbar</p>";
+        }
+    ?>
+
 
 </body>
 </html>
