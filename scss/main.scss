@@ -1,0 +1,37 @@
+$warning: #21FA90;
+
+.navbar{
+    border-radius: 7px;
+}
+
+.body{
+    background-color: lightgrey;
+}
+
+.card{
+    background-color: #ebe6e6;
+    width:18rem;
+    display:inline-block;
+}
+
+.card-title{
+    text-align: center;
+}
+
+.card-title a{
+    font-size: 75%;
+    text-decoration: none;
+    color: black;
+}
+
+#scrollToTopBtn{
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 15px;
+}
+
+@import './bootstrap.scss';
+
