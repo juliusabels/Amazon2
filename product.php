@@ -161,13 +161,20 @@
                             <div class="container d-md-block">
                                 <?php
                                     $category = $product['category'];
-                                    $similar_sql = "SELECT id, name FROM products WHERE category = '$category' AND id != $product_id LIMIT 4";
+                                    $similar_sql = "SELECT id, name, image_url, price FROM products WHERE category = '$category' AND id != $product_id LIMIT 4";
                                     $similar_result = $conn->query($similar_sql);
 
                                     if ($similar_result->num_rows > 0) {
                                         while ($similar_product = $similar_result->fetch_assoc()) {
-//Julius vielleicht noch Bilder einfügen
-                                            echo "<br><p> <a class='productSimilar rounded p-2 my-4 mx-2' href='product.php?id=" . $similar_product['id'] . "'>" . htmlspecialchars($similar_product['name']) . "</a></p>";
+                                            echo "<div class='card col mb-4 mx-auto bg-secondary' style='width:17rem;' id='cardHover'>";
+                                            if (!empty($similar_product['image_url'])) {
+                                                echo '<a href="product.php?id=' . $similar_product["id"] . '" ><img class="card-img-top rounded mt-3" alt="Bild konnte nicht geladen werden" width="300" height="300" src="data:image/jpeg;base64,'.base64_encode($similar_product['image_url']).'"/></a>';
+                                            }
+                                            echo "<div class='card-body'>";
+                                            echo "<h2 class='card-title text-center'><a href='product.php?id=" . $similar_product['id'] . "' >" . htmlspecialchars($similar_product['name']) . "</a></h2>";
+                                            echo "<p class='card-footer text-center border'>Preis: €" . number_format($similar_product['price'], 2) . "</p>
+                                                </div>";
+                                            echo "</div>";
                                         }
                                     } else {
                                         echo "<p>Keine ähnlichen Produkte gefunden.</p>";

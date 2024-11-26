@@ -63,6 +63,10 @@
                         <li class="nav-item mx-3">
                             <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
                         </li>
+                        <li class="nav-item mx-3">
+                            <a class="nav-link" href="index.php?category=Elektronik">Elektronik</a>
+                        </li>
+
                     </ul>
                     <form class="d-flex" method="GET" action="index.php">
                         <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
