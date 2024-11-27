@@ -54,7 +54,7 @@ $product = $product_result->fetch_assoc();
                 </h1>
             </div>
         </div>
-        <!-- Kategorien-Buttons -->
+
         <!-- Kategorien-Buttons -->
         <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
             <div class="container-fluid">
@@ -120,7 +120,17 @@ $product = $product_result->fetch_assoc();
             <input type="text" class="form-control" id="city" name="city" placeholder="Düsseldorf" required>
         </div>
         <div class="col-md-12">
+            <label for="payment" class="form-label">Zahlungsmethode:</label>
+            <select class="form-select" id="payment" name="payment" required>
+                <option value="paypal">PayPal</option>
+                <option value="creditcard">Kreditkarte</option>
+                <option value="banktransfer">Überweisung</option>
+            </select>
+        </div >
+        <div class="col-md-12">
             <button type="submit" class="btn btn-primary"> Absenden </button><br><br>
+        </div>
+
     </form>
 </div>
 
@@ -141,6 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zip = htmlspecialchars($_POST['zip']);
     $city = htmlspecialchars($_POST['city']);
     $email = htmlspecialchars($_POST['email']);
+    $payment = htmlspecialchars($_POST['payment']);
 
     // Zufällige Bestellnummer generieren
     $orderNumber = "FAKEZON-" . rand(100000, 999999);
@@ -151,6 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = "Hallo $name,\n\nVielen Dank für Ihre Bestellung bei Fakezon!\n\n" .
                "Produkt: " . $product['name'] . "\n" .
                "Preis: €" . number_format($product['price'], 2) . "\n" .
+               "Gewählte Bezahlungsmethode: $payment\n" .
                "Bestellnummer: $orderNumber\n\n" .
                "Ihre Lieferadresse:\n" .
                "Name: $name\n" .

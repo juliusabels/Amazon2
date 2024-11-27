@@ -217,7 +217,7 @@
 
                 $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . base64_encode($user['profile_picture']) : "img/unknown_user.png";
                 echo "<img src='$pfp' alt='Bild von " . htmlspecialchars($user['username']) . "'>" . "<p><strong>" . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
-                echo "<p>" . htmlspecialchars($rating['comment']) . " - Hier Datum soon" . "</p>";
+                echo "<p>" . htmlspecialchars($rating['comment']) . " - " . date("d/m/y H:i", strtotime($rating['date'])) . "</p>";
             }
         } else {
             echo "<p>Keine Rezensionen verfügbar</p>";
