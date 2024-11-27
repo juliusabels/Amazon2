@@ -74,7 +74,7 @@
                 </h1>
             </div>
         </div>
-        <!-- Kategorien-Buttons -->
+
         <!-- Kategorien-Buttons -->
         <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
             <div class="container-fluid">
@@ -206,6 +206,24 @@
 
     <!-- Rezensionen -->
     <h2>Rezensionen</h2>
+    <h4>Produkt bewerten</h4>
+    <form method="POST" action="add_rating.php">
+        <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+        <div class="form-group">
+            <label for="rating">Bewertung:</label>
+            <select class="form-control" id="rating" name="rating">
+                <option value="1">1/5</option>
+                <option value="2">2/5</option>
+                <option value="3">3/5</option>
+                <option value="4">4/5</option>
+                <option value="5">5/5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="comment">Kommentar:</label>
+            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+        </div>
+    </form>
     <?php
         $ratings_sql = "SELECT id, userId, rating, comment, date FROM ratings WHERE productId = $product_id";
         $ratings = $conn->query($ratings_sql);
