@@ -92,13 +92,14 @@
                 <div class="text-end px-4">
                     <?php
                         if (isset($_SESSION['user_id'])) {
-                            $user_sql = "SELECT username, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
+                            $user_sql = "SELECT firstname, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
                             $user = $conn->query($user_sql)->fetch_assoc();
-                            $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . base64_encode($user['profile_picture']) : "img/unknown_user.png";
+                            $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
 
-                            echo '<a href="profile.php" class="btn btn-primary btn-sm">Willkommen, ' . $_SESSION['user_name'] . '</a>';
-
+                            echo '<a href="profile.php" class="p"><img src="' . $pfp . '" class="rounded-circle" width="30" height="30" alt="Profilbild"></a>';
+                            echo " ";
                             echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
+
                         } else {
                             echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
                             echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';

@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Verbindung zur Datenbank herstellen (Datenbank-Details anpassen)
 $servername = "localhost";
 $username = "root";
@@ -77,6 +78,24 @@ $product = $product_result->fetch_assoc();
                         <button class="btn btn-outline-success" type="submit">Suchen</button>
                         <i class="fas fa-user"></i>
                     </form>
+                    <!-- Benutzer-Login -->
+                    <div class="text-end px-4">
+                        <?php
+                        if (isset($_SESSION['user_id'])) {
+                            $user_sql = "SELECT firstname, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
+                            $user = $conn->query($user_sql)->fetch_assoc();
+                            $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
+
+                            echo '<a href="profile.php" class="p"><img src="' . $pfp . '" class="rounded-circle" width="30" height="30" alt="Profilbild"></a>';
+                            echo " ";
+                            echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
+
+                        } else {
+                            echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
+                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </nav>

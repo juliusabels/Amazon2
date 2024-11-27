@@ -1,10 +1,5 @@
-- Nutzerprofil mit pfp ändern option
-
-Julius:
-- Kommentarfunktion
-- bei login username setzten in datenbank
 
 Tom:
-- Warenkorb icon
+- Rezensionen in css einbinden
 - kommentieren
 - code sortieren

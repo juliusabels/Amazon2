@@ -22,10 +22,14 @@ $errors = [];
 
 // Überprüfen, ob das Formular abgeschickt wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstname = validate_input($_POST["firstname"]);
     $name = validate_input($_POST["name"]);
     $email = validate_input($_POST["email"]);
     $password = validate_input($_POST["password"]);
     $password_confirm = validate_input($_POST["password_confirm"]);
+
+    //Default Nutzername erstellen
+    $username = strtolower($firstname) . "." . strtolower($name);
 
     // Validierungen
     if (empty($name)) {
@@ -55,9 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Wenn keine Fehler vorhanden sind, Benutzer registrieren
     if (empty($errors)) {
         $password_hash = password_hash($password, PASSWORD_DEFAULT); // Passwort verschlüsseln
-        $insert_query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        $insert_query = "INSERT INTO users (firstname, name, username, email, password) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("sss", $name, $email, $password_hash);
+        $stmt->bind_param("sssss", $firstname, $name, $username, $email, $password_hash);
 
         if ($stmt->execute()) {
             echo "<script>alert('Registrierung erfolgreich! Sie können sich jetzt einloggen.');</script>";
@@ -83,7 +87,22 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="body">
-    <div class="container mt-5">
+<div class="container">
+    <div class="text-center">
+        <h1 class="my-3">
+            <a href="index.php">
+                <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                     src="./img/logo.jpg"
+                     height=50%;
+                     alt="Scamazon"
+                     loading="lazy" />
+            </a>
+        </h1>
+    </div>
+</div>
+
+
+<div class="container mt-5">
         <h1 class="text-center">Registrieren Sie sich bei Fakezon</h1>
         <form class="row g-3" method="POST" action="registrierung.php">
             <!-- Fehlermeldungen anzeigen -->
@@ -98,9 +117,13 @@ $conn->close();
             <?php endif; ?>
 
             <!-- Formularfelder -->
+            <div class="col-md-6">
+                <label for="firstname" class="form-label">Vorname:</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Max" required>
+            </div>
             <div class="col-md-12">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Max Mustermann" required>
+                <label for="name" class="form-label">Nachname:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Mustermann" required>
             </div>
             <div class="col-md-12">
                 <label for="email" class="form-label">E-Mail:</label>
@@ -122,5 +145,10 @@ $conn->close();
             <p>Bereits registriert? <a href="login.php">Hier einloggen</a></p>
         </div>
     </div>
+
+<footer class="container border-top border-dark py-2">
+    <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
+</footer>
+
 </body>
 </html>

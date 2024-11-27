@@ -1,4 +1,5 @@
 <?php
+    session_start();
     // Verbindung zur Datenbank herstellen (Datenbank-Details anpassen)
     $servername = "localhost";
     $username = "root";
@@ -97,6 +98,24 @@
                         <button class="btn btn-outline-success" type="submit">Suchen</button>
                         <i class="fas fa-user"></i>
                     </form>
+                    <!-- Benutzer-Login -->
+                    <div class="text-end px-4">
+                        <?php
+                        if (isset($_SESSION['user_id'])) {
+                            $user_sql = "SELECT firstname, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
+                            $user = $conn->query($user_sql)->fetch_assoc();
+                            $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
+
+                            echo '<a href="profile.php" class="p"><img src="' . $pfp . '" class="rounded-circle" width="30" height="30" alt="Profilbild"></a>';
+                            echo " ";
+                            echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
+
+                        } else {
+                            echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
+                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -145,9 +164,7 @@
                                 echo "<p>Bewertung: " . number_format($average_rating, 1) . "/5</p>";
                                 echo "<p>Anzahl der Bewertungen " . $ratings->num_rows . " </p>";
                             }
-
                             ?>
-
 
                             <!-- Button zum Weiterleiten zur Bestellseite mit der Produkt-ID -->
                             <a href="checkout.php?product_id=<?php echo $product['id']; ?>">
@@ -205,43 +222,58 @@
     </footer>
 
     <!-- Rezensionen -->
-    <h2>Rezensionen</h2>
-    <h4>Produkt bewerten</h4>
-    <form method="POST" action="add_rating.php">
-        <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
-        <div class="form-group">
-            <label for="rating">Bewertung:</label>
-            <select class="form-control" id="rating" name="rating">
-                <option value="1">1/5</option>
-                <option value="2">2/5</option>
-                <option value="3">3/5</option>
-                <option value="4">4/5</option>
-                <option value="5">5/5</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="comment">Kommentar:</label>
-            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-        </div>
-    </form>
     <?php
-        $ratings_sql = "SELECT id, userId, rating, comment, date FROM ratings WHERE productId = $product_id";
-        $ratings = $conn->query($ratings_sql);
 
-        if ($ratings->num_rows > 0) {
-            while ($rating = $ratings->fetch_assoc()) {
-                $user_sql = "SELECT username, profile_picture FROM users WHERE id = " . $rating['userId'];
-                $user = $conn->query($user_sql)->fetch_assoc();
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $check_rating_sql = "SELECT id FROM ratings WHERE productId = $product_id AND userId = $user_id";
+        $check_rating_result = $conn->query($check_rating_sql);
 
-                $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . base64_encode($user['profile_picture']) : "img/unknown_user.png";
-                echo "<img src='$pfp' alt='Bild von " . htmlspecialchars($user['username']) . "'>" . "<p><strong>" . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
-                echo "<p>" . htmlspecialchars($rating['comment']) . " - " . date("d/m/y H:i", strtotime($rating['date'])) . "</p>";
-            }
+        if ($check_rating_result->num_rows > 0) {
+            echo '<p>Sie haben dieses Produkt bereits bewertet.</p>';
         } else {
-            echo "<p>Keine Rezensionen verfügbar</p>";
+            echo '<h4>Produkt bewerten</h4>';
+            echo '<form method="POST" action="add_rating.php">';
+            echo '<input type="hidden" name="product_id" value="' . $product_id . '">';
+            echo '<div class="form-group">';
+            echo '<label for="rating">Bewertung:</label>';
+            echo '<select class="form-control" id="rating" name="rating">';
+            echo '<option value="1">1/5</option>';
+            echo '<option value="2">2/5</option>';
+            echo '<option value="3">3/5</option>';
+            echo '<option value="4">4/5</option>';
+            echo '<option value="5">5/5</option>';
+            echo '</select>';
+            echo '</div>';
+            echo '<div class="form-group">';
+            echo '<label for="comment">Kommentar:</label>';
+            echo '<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>';
+            echo '</div>';
+            echo '<br>';
+            echo '<button type="submit" class="btn btn-primary">Bewertung abschicken</button>';
+            echo '</form>';
         }
-    ?>
+    } else {
+        echo '<p>Bitte <a href="login.php">melden Sie sich an</a>, um eine Bewertung abzugeben.</p>';
+    }
+    echo '<br>';
+    echo '<h2>Rezensionen</h2>';
+    $ratings_sql = "SELECT id, userId, rating, comment, date FROM ratings WHERE productId = $product_id ORDER BY date DESC";
+    $ratings = $conn->query($ratings_sql);
+    if ($ratings->num_rows > 0) {
+        while ($rating = $ratings->fetch_assoc()) {
+            $user_sql = "SELECT username, profile_picture FROM users WHERE id = " . $rating['userId'];
+            $user = $conn->query($user_sql)->fetch_assoc();
 
+            $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
+            echo  "<p><strong>" . '<img src="' . $pfp . '" class="rounded-circle" width="20" height="20" alt="Profilbild">' . " " . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
+            echo "<p>" . htmlspecialchars($rating['comment']) . " - " . date("d/m/y H:i", strtotime($rating['date'])) . "</p>";
+        }
+    } else {
+        echo "<p>Keine Rezensionen verfügbar</p>";
+    }
+
+    ?>
 
 </body>
 </html>

@@ -2,10 +2,10 @@
 // Datenbankverbindung herstellen
 $servername = "localhost";
 $username = "root";
-$password = "";
+$input_password = "";
 $dbname = "fakezon";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $input_password, $dbname);
 
 // Verbindung überprüfen
 if ($conn->connect_error) {
@@ -15,25 +15,29 @@ if ($conn->connect_error) {
 // Session starten
 session_start();
 
+if (isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['referrer'])) {
+    $_SESSION['referrer'] = $_SERVER['HTTP_REFERER'];
+}
+
 // Fehlermeldungen initialisieren
 $errors = [];
 
 // Überprüfen, ob das Formular abgeschickt wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = htmlspecialchars(trim($_POST["email"]));
-    $password = htmlspecialchars(trim($_POST["password"]));
+    $input_password = htmlspecialchars(trim($_POST["password"]));
 
     // Validierung
     if (empty($email)) {
         $errors[] = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
     }
-    if (empty($password)) {
+    if (empty($input_password)) {
         $errors[] = "Bitte geben Sie Ihr Passwort ein.";
     }
 
     // Wenn keine Validierungsfehler vorliegen
     if (empty($errors)) {
-        $query = "SELECT id, name, password FROM users WHERE email = ?";
+        $query = "SELECT id, username, password FROM users WHERE email = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -45,13 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->fetch();
 
             // Passwort überprüfen
-            if (password_verify($password, $hashed_password)) {
+            if (password_verify($input_password, $hashed_password)) {
                 // Login erfolgreich, Benutzer in der Session speichern
                 $_SESSION["user_id"] = $user_id;
                 $_SESSION["user_name"] = $user_name;
 
-                // Weiterleitung zur Startseite
-                header("Location: index.php");
+                // Weiterleitung zur Startseite oder zur vorherigen Seite
+                $redirect_url = isset($_SESSION['referrer']) ? $_SESSION['referrer'] : 'index.php';
+                unset($_SESSION['referrer']);
+                header("Location: $redirect_url");
                 exit();
             } else {
                 $errors[] = "Falsches Passwort.";
@@ -77,6 +83,19 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="body">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="my-3">
+                <a href="index.php">
+                    <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                        src="./img/logo.jpg"
+                        height=50%;
+                        alt="Scamazon"
+                        loading="lazy" />
+                </a>
+            </h1>
+        </div>
+    </div>
     <div class="container mt-5">
         <h1 class="text-center">Einloggen bei Fakezon</h1>
         <form class="row g-3" method="POST" action="login.php">
@@ -108,5 +127,10 @@ $conn->close();
             <p>Noch nicht registriert? <a href="registrierung.php">Hier registrieren</a></p>
         </div>
     </div>
+
+    <footer class="container border-top border-dark py-2">
+        <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
+    </footer>
+
 </body>
 </html>
