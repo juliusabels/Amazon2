@@ -61,46 +61,53 @@
 <body class="body" id="body">
 
     <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
-    <header>
-        <div class="container">
-            <div class="text-center">
-                <h1 class="my-3">
-                    <a href="index.php">
-                        <img class="img-fluid img-thumbnail" style="max-width: 30%"
-                            src="./img/logo.jpg"
-                            height=50%;
-                            alt="Scamazon"
-                            loading="lazy" />
-                        </a>
-                </h1>
-            </div>
+<header>
+    <div class="container">
+        <div class="text-center">
+            <h1 class="my-3">
+                <a href="index.php">
+                    <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                         src="./img/logo.jpg"
+                         height=50%;
+                         alt="Scamazon"
+                         loading="lazy" />
+                </a>
+            </h1>
         </div>
 
-        <!-- Kategorien-Buttons -->
-        <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
-            <div class="container-fluid">
-	            <a class="navbar-brand p-2" href="index.php">Alle Produkte</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <h1 class="mx-auto text-center">Willkommen bei Fakezon</h1>
+        <p  class="mx-auto text-center">Ihr Online-Marktplatz für alles Mögliche!</p>
+    </div>
 
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" aria-current="page" href="index.php?category=Oberteile">Oberteile</a>
-                        </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" method="GET" action="index.php">
-                        <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                        <button class="btn btn-outline-success" type="submit">Suchen</button>
-                        <i class="fas fa-user"></i>
-                    </form>
-                    <!-- Benutzer-Login -->
-                    <div class="text-end px-4">
-                        <?php
+    <!-- Kategorien-Buttons -->
+    <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
+        <div class="container-fluid">
+            <a class="navbar-brand p-2" href="index.php">Alle Produkte</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" aria-current="page" href="index.php?category=Oberteile">Oberteile</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="index.php?category=Elektronik">Elektronik</a>
+                    </li>
+
+                </ul>
+                <!-- Suchleiste -->
+                <form class="d-flex" method="GET" action="index.php">
+                    <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <button class="btn btn-outline-success" type="submit">Suchen</button>
+                </form>
+                <!-- Benutzer-Login -->
+                <div class="text-end px-4">
+                    <?php
                         if (isset($_SESSION['user_id'])) {
                             $user_sql = "SELECT firstname, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
                             $user = $conn->query($user_sql)->fetch_assoc();
@@ -111,19 +118,20 @@
                             echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
 
                         } else {
-                            echo '<a href="login.php" class="btn btn-primary btn-sm m-2 p-2">Login</a>';
-                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
+                            echo '<a href="login.php" class="btn btn-primary btn-sm m-1 py-2 px-3">Login</a>';
+                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm m-1 py-2 px-3">Registrieren</a>';
                         }
-                        ?>
-                    </div>
+                    ?>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
 
-    </header>
+</header>
 
 
+    <!-- Produkte in Kartenansicht -->
     <div class="container d-flex justify-content-center my-50">
         <div class="row">
             <div class= "col-md-12" >
@@ -212,72 +220,70 @@
     </div>
 
 
-    <div class="container">    
-    <!-- Rezensionen -->
-    <?php
+    <div class="container mx-auto mt-4">    
+        <!-- Rezensionen -->
+            <?php
 
-if (isset($_SESSION['user_id'])) {
-        $user_id = $_SESSION['user_id'];
-        $check_rating_sql = "SELECT id FROM ratings WHERE productId = $product_id AND userId = $user_id";
-        $check_rating_result = $conn->query($check_rating_sql);
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+                    $check_rating_sql = "SELECT id FROM ratings WHERE productId = $product_id AND userId = $user_id";
+                    $check_rating_result = $conn->query($check_rating_sql);
 
-        if ($check_rating_result->num_rows > 0) {
-            echo '<p>Sie haben dieses Produkt bereits bewertet.</p>';
-        } else {
-            echo '<h4>Produkt bewerten</h4>';
-            echo '<form method="POST" action="add_rating.php">';
-            echo '<input type="hidden" name="product_id" value="' . $product_id . '">';
-            echo '<div class="form-group">';
-            echo '<label for="rating">Bewertung:</label>';
-            echo '<select class="form-control" id="rating" name="rating">';
-            echo '<option value="1">1/5</option>';
-            echo '<option value="2">2/5</option>';
-            echo '<option value="3">3/5</option>';
-            echo '<option value="4">4/5</option>';
-            echo '<option value="5">5/5</option>';
-            echo '</select>';
-            echo '</div>';
-            echo '<div class="form-group">';
-            echo '<label for="comment">Kommentar:</label>';
-            echo '<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>';
-            echo '</div>';
-            echo '<br>';
-            echo '<button type="submit" class="btn btn-primary">Bewertung abschicken</button>';
-            echo '</form>';
-        }
-    } else {
-        echo '<p>Bitte <a href="login.php">melden Sie sich an</a>, um eine Bewertung abzugeben.</p>';
-    }
-    echo '<br>';
-    echo '<h2>Rezensionen</h2>';
-    $ratings_sql = "SELECT id, userId, rating, comment, date FROM ratings WHERE productId = $product_id ORDER BY date DESC";
-    $ratings = $conn->query($ratings_sql);
-    if ($ratings->num_rows > 0) {
-        while ($rating = $ratings->fetch_assoc()) {
-            $user_sql = "SELECT username, profile_picture FROM users WHERE id = " . $rating['userId'];
-            $user = $conn->query($user_sql)->fetch_assoc();
+                    if ($check_rating_result->num_rows > 0) {
+                        echo '<p>Sie haben dieses Produkt bereits bewertet.</p>';
+                    } else {
+                        echo '<h2>Produkt bewerten</h2>';
+                        echo '<form method="POST" action="add_rating.php">';
+                        echo '<input type="hidden" name="product_id" value="' . $product_id . '">';
+                        echo '<div class="form-group">';
+                        echo '<label for="rating">Bewertung:</label>';
+                        echo '<select class="form-control" id="rating" name="rating">';
+                        echo '<option value="1">1/5</option>';
+                        echo '<option value="2">2/5</option>';
+                        echo '<option value="3">3/5</option>';
+                        echo '<option value="4">4/5</option>';
+                        echo '<option value="5">5/5</option>';
+                        echo '</select>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="comment">Kommentar:</label>';
+                        echo '<textarea class="form-control" id="comment" name="comment" rows="3"></textarea>';
+                        echo '</div>';
+                        echo '<br>';
+                        echo '<div class="text-center"><button type="submit" class="btn btn-primary">Bewertung abschicken</button></div>';
+                        echo '</form>';
+                    }
+                } else {
+                    echo '<p>Bitte <a href="login.php">melden Sie sich an</a>, um eine Bewertung abzugeben.</p>';
+                }
+                echo '<br>';
+                echo '<h2>Rezensionen</h2>';
+                $ratings_sql = "SELECT id, userId, rating, comment, date FROM ratings WHERE productId = $product_id ORDER BY date DESC";
+                $ratings = $conn->query($ratings_sql);
+                if ($ratings->num_rows > 0) {
+                    while ($rating = $ratings->fetch_assoc()) {
+                        $user_sql = "SELECT username, profile_picture FROM users WHERE id = " . $rating['userId'];
+                        $user = $conn->query($user_sql)->fetch_assoc();
 
-            $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
-            echo  "<p><strong>" . '<img src="' . $pfp . '" class="rounded-circle" width="40" height="40" alt="Profilbild">' . " " . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
-            echo "<p>" . htmlspecialchars($rating['comment']) . " - " . date("d/m/y H:i", strtotime($rating['date'])) . "</p>";
-        }
-    } else {
-        echo "<p>Keine Rezensionen verfügbar</p>";
-    }
+                        $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
+                        echo  "<p><strong>" . '<img src="' . $pfp . '" class="rounded-circle" width="40" height="40" alt="Profilbild">' . " " . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
+                        echo "<p>" . htmlspecialchars($rating['comment']) . " - " . date("d/m/y H:i", strtotime($rating['date'])) . "</p>";
+                    }
+                } else {
+                    echo "<p>Keine Rezensionen verfügbar</p>";
+                }
+            ?>
+    </div>
 
-    ?>
+    <!-- Scroll-to-Top Button -->
+    <button class="btn btn-danger btn-floating btn-lg" onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen">
+        ↑ Nach oben
+    </button>
 
-</div>
-
-<!-- Scroll-to-Top Button -->
-<button class="btn btn-danger btn-floating btn-lg" onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen">
-    ↑ Nach oben
-</button>
-
-<!-- Footer-Bereich -->
-<footer class="container border-top border-dark py-2">
-    <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
-</footer>
+    <!-- Footer-Bereich -->
+    <footer class="container border-top border-dark py-2">
+        <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
+    </footer>
 
 </body>
 </html>

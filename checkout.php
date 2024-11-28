@@ -40,47 +40,53 @@ $product = $product_result->fetch_assoc();
     </script>
 </head>
 
+
+
 <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
 <header>
-        <div class="container">
-            <div class="text-center">
-                <h1 class="my-3">
-                    <a href="index.php">
-                        <img class="img-fluid img-thumbnail" style="max-width: 30%"
-                            src="./img/hilfe.jpg"
-                            height=50%;
-                            alt="Scamazon"
-                            loading="lazy" />
+    <div class="container">
+        <div class="text-center">
+            <h1 class="my-3">
+                <a href="index.php">
+                    <img class="img-fluid img-thumbnail" style="max-width: 30%"
+                         src="./img/hilfe.jpg"
+                         height=50%;
+                         alt="Scamazon"
+                         loading="lazy" />
                 </a>
-                </h1>
-            </div>
+            </h1>
         </div>
+    </div>
 
-        <!-- Kategorien-Buttons -->
-        <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
-            <div class="container-fluid">
-	            <a class="navbar-brand p-2" href="index.php">Alle Produkte</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <!-- Kategorien-Buttons -->
+    <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
+        <div class="container-fluid">
+            <a class="navbar-brand p-2" href="index.php">Alle Produkte</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" aria-current="page" href="index.php?category=Oberteile">Oberteile</a>
-                        </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" method="GET" action="index.php">
-                        <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                        <button class="btn btn-outline-success" type="submit">Suchen</button>
-                        <i class="fas fa-user"></i>
-                    </form>
-                    <!-- Benutzer-Login -->
-                    <div class="text-end px-4">
-                        <?php
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" aria-current="page" href="index.php?category=Oberteile">Oberteile</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="index.php?category=Accessoires">Accessoires</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="index.php?category=Elektronik">Elektronik</a>
+                    </li>
+
+                </ul>
+                <!-- Suchleiste -->
+                <form class="d-flex" method="GET" action="index.php">
+                    <input class="form-control me-2" type="text" name="search" placeholder="Nach Produkten suchen..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <button class="btn btn-outline-success" type="submit">Suchen</button>
+                </form>
+                <!-- Benutzer-Login -->
+                <div class="text-end px-4">
+                    <?php
                         if (isset($_SESSION['user_id'])) {
                             $user_sql = "SELECT firstname, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
                             $user = $conn->query($user_sql)->fetch_assoc();
@@ -91,22 +97,22 @@ $product = $product_result->fetch_assoc();
                             echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
 
                         } else {
-                            echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
-                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
+                            echo '<a href="login.php" class="btn btn-primary btn-sm m-1 py-2 px-3">Login</a>';
+                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm m-1 py-2 px-3">Registrieren</a>';
                         }
-                        ?>
-                    </div>
+                    ?>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        
-    </header>
+
+</header>
 
 <body class = body>
 
 <div class="container mx- px-5 mt-5">
-    <h1 class="text-center my-5"> Bestellinformationen</h1>
+    <h1 class="display-2 text-center my-5"> Bestellinformationen</h1>
     <?php if ($product): ?>
          <!-- Produktdetails anzeigen -->
          <h2 class="fst-italic">Produkt: <?php echo htmlspecialchars($product['name']); ?></h2>
@@ -146,7 +152,7 @@ $product = $product_result->fetch_assoc();
                 <option value="banktransfer">Überweisung</option>
             </select>
         </div >
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-primary"> Absenden </button><br><br>
         </div>
 

@@ -112,8 +112,8 @@ $conn->close();
 </div>
 
 
-<div class="container mt-5">
-        <h1 class="text-center">Registrieren Sie sich bei Fakezon</h1>
+<div class="container my-5">
+        <h1 class="text-center my-5">Registrieren Sie sich bei Fakezon</h1>
         <form class="row g-3" method="POST" action="registrierung.php">
             <!-- Fehlermeldungen anzeigen -->
             <?php if (!empty($errors)): ?>
@@ -131,7 +131,7 @@ $conn->close();
                 <label for="firstname" class="form-label">Vorname:</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Max" required>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <label for="name" class="form-label">Nachname:</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Mustermann" required>
             </div>
@@ -147,7 +147,7 @@ $conn->close();
                 <label for="password_confirm" class="form-label">Passwort bestätigen:</label>
                 <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Passwort bestätigen" required>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Registrieren</button>
             </div>
         </form>

@@ -115,29 +115,52 @@ $conn->close();
     </nav>
 </header>
 
-<h2 class="text-center mt-3">Profil von <?php echo htmlspecialchars($user['username']); ?></h2>
-<div class="container mt-5">
+<h2 class="display-3 text-center mt-3">Profil von <?php echo htmlspecialchars($user['username']); ?></h2>
+<div class="container my-5 mx-auto">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 text-center align-middle my-auto">
             <img src="<?php echo $pfp; ?>" class="img-fluid img-thumbnail" alt="Profilbild">
         </div>
         <div class="col-md-6">
             <h3>Profilinformationen</h3>
-            <p><strong>Vorname:</strong> <?php echo htmlspecialchars($user['firstname']); ?></p>
-            <p><strong>Nachname:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
-            <p><strong>Nutzername:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
+            <div class="row my-3">
+                <div class="col-md-6">
+                    <strong>Vorname:</strong>
+                </div>
+                <div class="col-md-6">
+                    <?php echo htmlspecialchars($user['firstname']); ?>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-6">
+                    <strong>Nachname:</strong>
+                </div>
+                <div class="col-md-6">
+                    <?php echo htmlspecialchars($user['name']); ?>
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-6">
+                    <strong>Nutzername:</strong>
+                </div>
+                <div class="col-md-6">
+                    <?php echo htmlspecialchars($user['username']); ?>
+                </div>
+            </div>
 
             <!-- Form to update username and profile picture -->
             <form method="POST" action="profile.php" enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="form-group my-2">
                     <label for="username">Neuer Nutzername:</label>
                     <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>">
                 </div>
-                <div class="form-group">
+                <div class="form-group my-2">
                     <label for="profile_picture">Neues Profilbild:</label>
                     <input type="file" class="form-control" id="profile_picture" name="profile_picture">
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Profil aktualisieren</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-3">Profil aktualisieren</button>
+                </div>
             </form>
         </div>
     </div>

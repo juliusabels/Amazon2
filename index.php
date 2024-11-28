@@ -114,7 +114,7 @@
 </header>
 
 <!-- Card Bereich für Produkte -->
-<div  class="container mx-auto mt-4">
+<div  class="container mx-auto my-4">
     <div class="row row-cols-4">
 
         <!-- PHP-Code zum Abrufen und Filtern von Produkten aus der Datenbank -->
