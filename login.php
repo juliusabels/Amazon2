@@ -15,7 +15,16 @@ if ($conn->connect_error) {
 // Session starten
 session_start();
 
-if (isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['referrer']) && $_SERVER['HTTP_REFERER'] != 'registrierung.php') {
+// Prüfen, ob der Benutzer bereits eingeloggt ist
+if (isset($_SESSION['user_id'])) {
+    // Zur vorherigen Seite weiterleiten
+    $redirect_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
+    header("Location: $redirect_url");
+    exit;
+}
+
+// Ursprungsseite speichern (falls nicht die Registrierung)
+if (isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['referrer']) && strpos($_SERVER['HTTP_REFERER'], 'registrierung.php') === false) {
     $_SESSION['referrer'] = $_SERVER['HTTP_REFERER'];
 }
 
@@ -54,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["user_id"] = $user_id;
                 $_SESSION["user_name"] = $user_name;
 
-                // Weiterleitung zur Startseite oder zur vorherigen Seite
-                $redirect_url = isset($_SESSION['referrer']) && $_SESSION['referrer'] != 'http://localhost/fakezon/registrierung.php' ? $_SESSION['referrer'] : 'index.php';
+                // Weiterleitung zur vorherigen Seite oder Startseite
+                $redirect_url = isset($_SESSION['referrer']) ? $_SESSION['referrer'] : 'index.php';
                 unset($_SESSION['referrer']);
                 header("Location: $redirect_url");
                 exit();
@@ -72,6 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="de">
