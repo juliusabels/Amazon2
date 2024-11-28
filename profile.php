@@ -94,24 +94,9 @@ $conn->close();
     </div>
 
     <!-- Kategorien-Buttons -->
-    <nav class="navbar navbar-expand-lg bg-warning px-5 mx-auto">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg bg-warning px-5 py-4 mx-auto flex-row-reverse ">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                <!-- Benutzer-Login -->
-                <div class="text-end px-4">
-                    <?php
-                    if (isset($_SESSION['user_id'])) {
-                        echo '<a href="profile.php" class="p"><img src="' . $pfp . '" class="rounded-circle" width="30" height="30" alt="Profilbild"></a>';
-                        echo " ";
-                        echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
-                    } else {
-                        echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
-                        echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
-                    }
-                    ?>
-                </div>
             </div>
-        </div>
     </nav>
 </header>
 
@@ -162,6 +147,23 @@ $conn->close();
                     <button type="submit" class="btn btn-primary mt-3">Profil aktualisieren</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center align-middle my-auto">
+            <!-- Benutzer-Login -->
+            <div class="mx-auto">
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        echo '<a href="profile.php" class="p"><img src="' . $pfp . '" class="rounded-circle" width="30" height="30" alt="Profilbild"></a>';
+                        echo " ";
+                        echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
+                    } else {
+                        echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
+                        echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
+                    }
+                    ?>
+                </div>
         </div>
     </div>
 </div>
