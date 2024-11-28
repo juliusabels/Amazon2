@@ -144,7 +144,7 @@ $conn->close();
                     <input type="file" class="form-control" id="profile_picture" name="profile_picture">
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary mt-3">Profil aktualisieren</button>
+                    <button type="submit" class="btn btn-primary mt-3" href="index.php">Profil aktualisieren</button>
                 </div>
             </form>
         </div>
