@@ -15,6 +15,13 @@ if ($conn->connect_error) {
 // Session starten
 session_start();
 
+if (isset($_SESSION['user_id'])) {
+    // Zur vorherigen Seite weiterleiten
+    $redirect_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
+    header("Location: $redirect_url");
+    exit;
+}
+
 // Ursprungsseite speichern (falls nicht bereits gesetzt)
 if (isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['referrer']) && strpos($_SERVER['HTTP_REFERER'], 'login.php') === false) {
     $_SESSION['referrer'] = $_SERVER['HTTP_REFERER'];
@@ -74,9 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             // Erfolgreiche Registrierung
             echo "<script>alert('Registrierung erfolgreich! Sie können sich jetzt einloggen.');</script>";
-            $redirect_url = isset($_SESSION['referrer']) ? $_SESSION['referrer'] : 'login.php';
-            unset($_SESSION['referrer']);
-            header("Location: $redirect_url");
+            header("Location: login.php");
             exit();
         } else {
             $errors[] = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
