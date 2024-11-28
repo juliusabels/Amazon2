@@ -101,8 +101,8 @@
                             echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
 
                         } else {
-                            echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
-                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
+                            echo '<a href="login.php" class="btn btn-primary btn-sm m-1 py-2 px-3">Login</a>';
+                            echo '<a href="registrierung.php" class="btn btn-secondary btn-sm m-1 py-2 px-3">Registrieren</a>';
                         }
                     ?>
                 </div>

@@ -111,7 +111,7 @@
                             echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
 
                         } else {
-                            echo '<a href="login.php" class="btn btn-primary btn-sm">Login</a>';
+                            echo '<a href="login.php" class="btn btn-primary btn-sm m-2 p-2">Login</a>';
                             echo '<a href="registrierung.php" class="btn btn-secondary btn-sm">Registrieren</a>';
                         }
                         ?>
@@ -126,7 +126,7 @@
 
     <div class="container d-flex justify-content-center my-50">
         <div class="row">
-            <div class= "col-md-10" >
+            <div class= "col-md-12" >
                 <div class="card card-body">
                     <div class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
                         <div class="mr-2 mb-3 mb-lg-0">
@@ -211,20 +211,12 @@
         </div>
     </div>
 
-     <!-- Scroll-to-Top Button -->
-     <button class="btn btn-danger btn-floating btn-lg" onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen">
-        ↑ Nach oben
-    </button>
 
-    <!-- Footer-Bereich -->
-    <footer class="container border-top border-dark py-2">
-        <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
-    </footer>
-
+    <div class="container">    
     <!-- Rezensionen -->
     <?php
 
-    if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
         $check_rating_sql = "SELECT id FROM ratings WHERE productId = $product_id AND userId = $user_id";
         $check_rating_result = $conn->query($check_rating_sql);
@@ -266,7 +258,7 @@
             $user = $conn->query($user_sql)->fetch_assoc();
 
             $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
-            echo  "<p><strong>" . '<img src="' . $pfp . '" class="rounded-circle" width="20" height="20" alt="Profilbild">' . " " . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
+            echo  "<p><strong>" . '<img src="' . $pfp . '" class="rounded-circle" width="40" height="40" alt="Profilbild">' . " " . htmlspecialchars($user['username']) . "</strong> - Bewertung: " . $rating['rating'] . "/5</p>";
             echo "<p>" . htmlspecialchars($rating['comment']) . " - " . date("d/m/y H:i", strtotime($rating['date'])) . "</p>";
         }
     } else {
@@ -275,6 +267,18 @@
 
     ?>
 
+</div>
+
+<!-- Scroll-to-Top Button -->
+<button class="btn btn-danger btn-floating btn-lg" onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen">
+    ↑ Nach oben
+</button>
+
+<!-- Footer-Bereich -->
+<footer class="container border-top border-dark py-2">
+    <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
+</footer>
+
 </body>
 </html>
 
@@ -282,3 +286,4 @@
     // Verbindung schließen
     $conn->close();
 ?>
+
