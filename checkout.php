@@ -1,25 +1,26 @@
 <?php
-session_start();
+session_start(); // Startet die Session
+
 // Verbindung zur Datenbank herstellen (Datenbank-Details anpassen)
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "fakezon";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname); // Erstellt eine neue Verbindung zur Datenbank
 
 // Verbindung überprüfen
 if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+    die("Verbindung fehlgeschlagen: " . $conn->connect_error); // Beendet das Skript und gibt eine Fehlermeldung aus, wenn die Verbindung fehlschlägt
 }
 
 // Produkt-ID aus der URL abrufen
-$product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
+$product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0; // Holt die Produkt-ID aus der URL und konvertiert sie in eine Ganzzahl
 
 // Produktdetails abrufen
-$product_sql = "SELECT name, price FROM products WHERE id = $product_id";
-$product_result = $conn->query($product_sql);
-$product = $product_result->fetch_assoc();
+$product_sql = "SELECT name, price FROM products WHERE id = $product_id"; // SQL-Abfrage, um Produktdetails basierend auf der Produkt-ID abzurufen
+$product_result = $conn->query($product_sql); // Führt die SQL-Abfrage aus
+$product = $product_result->fetch_assoc(); // Holt die Produktdetails als assoziatives Array
 ?>
 
 <!DOCTYPE html>
@@ -35,12 +36,10 @@ $product = $product_result->fetch_assoc();
         // Funktion, um Pop-up mit Bestellnummer anzuzeigen
         function showThankYouPopup(orderNumber) {
             alert("Vielen Dank für Ihre Bestellung! Ihre Bestellnummer ist: " + orderNumber);
-            window.location = 'product.php?id=<?php echo $product_id; ?>';
+            window.location = 'product.php?id=<?php echo $product_id; ?>'; // Leitet den Benutzer nach dem Schließen des Pop-ups zur Produktseite weiter
         }
     </script>
 </head>
-
-
 
 <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
 <header>
@@ -77,7 +76,6 @@ $product = $product_result->fetch_assoc();
                     <li class="nav-item mx-3">
                         <a class="nav-link" href="index.php?category=Elektronik">Elektronik</a>
                     </li>
-
                 </ul>
                 <!-- Suchleiste -->
                 <form class="d-flex" method="GET" action="index.php">
@@ -105,11 +103,9 @@ $product = $product_result->fetch_assoc();
             </div>
         </div>
     </nav>
-
-
 </header>
 
-<body class = body>
+<body class="body">
 
 <div class="container mx- px-5 mt-5">
     <h1 class="display-2 text-center my-5"> Bestellinformationen</h1>
@@ -121,7 +117,7 @@ $product = $product_result->fetch_assoc();
         <p class="my-5">Produkt konnte nicht gefunden werden.</p>
         <?php exit; ?>
     <?php endif; ?>
-    
+
     <!-- Bestellformular -->
     <form class="row g-3" method="POST" action="checkout.php?product_id=<?php echo $product_id; ?>">
         <div class="col-md-12">
@@ -155,7 +151,6 @@ $product = $product_result->fetch_assoc();
         <div class="col-md-12 text-center">
             <button type="submit" class="btn btn-primary"> Absenden </button><br><br>
         </div>
-
     </form>
 </div>
 
@@ -210,14 +205,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- Footer-Bereich -->
 <footer class="container border-top border-dark py-2 mt-3">
-        <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
-    </footer>
+    <p>Alle Rechte vorbehalten &copy; <?php echo date("Y"); ?> Fakezon</p>
+</footer>
 
 </body>
 </html>
 
 <?php
 // Verbindung zur Datenbank schließen
-$conn->close();
+$conn->close(); // Schließt die Verbindung zur Datenbank
 ?>
-
