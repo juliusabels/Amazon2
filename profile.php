@@ -1,5 +1,7 @@
 <?php
-session_start();
+session_start(); // Startet die Session
+
+// Überprüft, ob der Benutzer eingeloggt ist, andernfalls wird er zur Login-Seite weitergeleitet
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -11,41 +13,44 @@ $username = "root";
 $password = "";
 $dbname = "fakezon";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname); // Erstellt eine neue Verbindung zur Datenbank
 
 // Verbindung überprüfen
 if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+    die("Verbindung fehlgeschlagen: " . $conn->connect_error); // Beendet das Skript und gibt eine Fehlermeldung aus, wenn die Verbindung fehlschlägt
 }
 
+// Überprüft, ob das Formular per POST-Methode abgeschickt wurde
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $new_username = $conn->real_escape_string($_POST['username']);
-    $user_id = $_SESSION['user_id'];
+    $new_username = $conn->real_escape_string($_POST['username']); // Holt den neuen Benutzernamen aus dem POST-Request und sichert ihn gegen SQL-Injection
+    $user_id = $_SESSION['user_id']; // Holt die Benutzer-ID aus der Session
 
-    // Handle profile picture upload
+    // Überprüft, ob ein neues Profilbild hochgeladen wurde
     if (!empty($_FILES['profile_picture']['tmp_name'])) {
-        $profile_picture = base64_encode(file_get_contents($_FILES['profile_picture']['tmp_name']));
-        $update_sql = $conn->prepare("UPDATE users SET username = ?, profile_picture = ? WHERE id = ?");
-        $update_sql->bind_param("ssi", $new_username, $profile_picture, $user_id);
+        $profile_picture = base64_encode(file_get_contents($_FILES['profile_picture']['tmp_name'])); // Kodiert das hochgeladene Bild in Base64
+        $update_sql = $conn->prepare("UPDATE users SET username = ?, profile_picture = ? WHERE id = ?"); // Bereitet die SQL-Abfrage zum Aktualisieren des Benutzernamens und Profilbilds vor
+        $update_sql->bind_param("ssi", $new_username, $profile_picture, $user_id); // Bindet die Parameter an die SQL-Abfrage
     } else {
-        $update_sql = $conn->prepare("UPDATE users SET username = ? WHERE id = ?");
-        $update_sql->bind_param("si", $new_username, $user_id);
+        $update_sql = $conn->prepare("UPDATE users SET username = ? WHERE id = ?"); // Bereitet die SQL-Abfrage zum Aktualisieren des Benutzernamens vor
+        $update_sql->bind_param("si", $new_username, $user_id); // Bindet die Parameter an die SQL-Abfrage
     }
 
+    // Führt die SQL-Abfrage aus und überprüft, ob sie erfolgreich war
     if ($update_sql->execute() === TRUE) {
-        echo "Profil erfolgreich aktualisiert.";
+        echo "Profil erfolgreich aktualisiert."; // Gibt eine Erfolgsmeldung aus
     } else {
-        echo "Fehler beim Aktualisieren des Profils: " . $conn->error;
+        echo "Fehler beim Aktualisieren des Profils: " . $conn->error; // Gibt eine Fehlermeldung aus
     }
 }
 
+// Holt die aktuellen Benutzerdaten aus der Datenbank
 $user_sql = $conn->prepare("SELECT username, firstname, name, profile_picture FROM users WHERE id = ?");
-$user_sql->bind_param("i", $_SESSION['user_id']);
-$user_sql->execute();
-$user = $user_sql->get_result()->fetch_assoc();
-$pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
+$user_sql->bind_param("i", $_SESSION['user_id']); // Bindet die Benutzer-ID an die SQL-Abfrage
+$user_sql->execute(); // Führt die SQL-Abfrage aus
+$user = $user_sql->get_result()->fetch_assoc(); // Holt die Benutzerdaten als assoziatives Array
+$pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png"; // Setzt das Profilbild oder ein Standardbild
 
-$conn->close();
+$conn->close(); // Schließt die Verbindung zur Datenbank
 ?>
 
 <!DOCTYPE html>
@@ -133,7 +138,7 @@ $conn->close();
                 </div>
             </div>
 
-            <!-- Form to update username and profile picture -->
+            <!-- Formular zum Aktualisieren des Benutzernamens und Profilbilds -->
             <form method="POST" action="profile.php" enctype="multipart/form-data">
                 <div class="form-group my-2">
                     <label for="username">Neuer Nutzername:</label>

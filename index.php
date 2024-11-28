@@ -6,6 +6,7 @@
     $password = "";
     $dbname = "fakezon";
 
+    // Verbindung zur Datenbank herstellen
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     // Verbindung überprüfen
@@ -16,6 +17,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="de">
+<!-- Einbinden von Bootstrap und CSS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="./css/main.css">
 
@@ -40,7 +42,6 @@
         };
     </script>
 </head>
-
 
 <body class="body">
 <!-- Header-Bereich mit Titel der Webseite und Suchleiste -->
@@ -81,7 +82,6 @@
                     <li class="nav-item mx-3">
                         <a class="nav-link" href="index.php?category=Elektronik">Elektronik</a>
                     </li>
-
                 </ul>
                 <!-- Suchleiste -->
                 <form class="d-flex" method="GET" action="index.php">
@@ -92,15 +92,18 @@
                 <div class="text-end px-4">
                     <?php
                         if (isset($_SESSION['user_id'])) {
+                            // Benutzerinformationen abrufen
                             $user_sql = "SELECT firstname, profile_picture FROM users WHERE id = '" . $_SESSION['user_id'] . "'";
                             $user = $conn->query($user_sql)->fetch_assoc();
                             $pfp = !empty($user['profile_picture']) ? "data:image/jpeg;base64," . $user['profile_picture'] : "img/unknown_user.png";
 
+                            // Benutzerprofil und Logout-Button anzeigen
                             echo '<a href="profile.php" class="p"><img src="' . $pfp . '" class="rounded-circle" width="30" height="30" alt="Profilbild"></a>';
                             echo " ";
                             echo '<a href="logout.php" class="btn btn-danger btn-sm"> Logout</a>';
 
                         } else {
+                            // Login- und Registrieren-Buttons anzeigen
                             echo '<a href="login.php" class="btn btn-primary btn-sm m-1 py-2 px-3">Login</a>';
                             echo '<a href="registrierung.php" class="btn btn-secondary btn-sm m-1 py-2 px-3">Registrieren</a>';
                         }
@@ -109,14 +112,11 @@
             </div>
         </div>
     </nav>
-
-
 </header>
 
 <!-- Card Bereich für Produkte -->
 <div  class="container mx-auto my-4">
     <div class="row row-cols-4">
-
         <!-- PHP-Code zum Abrufen und Filtern von Produkten aus der Datenbank -->
         <?php
         // Suchbegriff und Kategorie-Filter festlegen
@@ -136,11 +136,11 @@
             $sql .= " AND name LIKE '%$searchTerm%'";
         }
 
+        // Abfrage ausführen
         $result = $conn->query($sql);
 
         // Überprüfen, ob Produkte vorhanden sind
         if ($result->num_rows > 0) {
-
             // Schleife durch die Produkte
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='card col mb-4 mx-auto bg-secondary' style='width:18rem;' id='cardHover'>";
@@ -156,13 +156,9 @@
         } else {
             echo "<p>Keine Produkte gefunden.</p>";
         }
-
         ?>
-
-        <!-- Schließen des card-container und row div-->
     </div>
 </div>
-
 
 <!-- Scroll-to-Top Button -->
 <button class="btn btn-danger btn-floating btn-lg" onclick="scrollToTop()" id="scrollToTopBtn" title="Nach oben scrollen">

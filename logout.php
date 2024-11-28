@@ -1,12 +1,9 @@
 <?php
-// Session starten
-session_start();
+session_start(); // Startet die Session
 
-// Alle Session-Daten löschen
-session_unset();
-session_destroy();
+session_unset(); // Löscht alle Session-Daten
+session_destroy(); // Zerstört die Session
 
-// Zurück zur Startseite leiten
-header("Location: index.php");
-exit();
+header("Location: index.php"); // Leitet den Benutzer zur Startseite weiter
+exit(); // Beendet das Skript
 ?>

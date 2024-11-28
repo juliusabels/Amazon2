@@ -15,8 +15,9 @@ if ($conn->connect_error) {
 // Session starten
 session_start();
 
+// Überprüfen, ob der Benutzer bereits eingeloggt ist
 if (isset($_SESSION['user_id'])) {
-    // Zur vorherigen Seite weiterleiten
+    // Zur vorherigen Seite weiterleiten oder zur Startseite, falls keine vorherige Seite vorhanden ist
     $redirect_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
     header("Location: $redirect_url");
     exit;
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = validate_input($_POST["password"]);
     $password_confirm = validate_input($_POST["password_confirm"]);
 
-    //Default Nutzername erstellen
+    // Default Nutzername erstellen
     $username = strtolower($firstname) . "." . strtolower($name);
 
     // Validierungen
@@ -115,7 +116,6 @@ $conn->close();
         </h1>
     </div>
 </div>
-
 
 <div class="container my-5">
         <h1 class="text-center my-5">Registrieren Sie sich bei Fakezon</h1>
