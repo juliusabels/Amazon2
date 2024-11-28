@@ -12,6 +12,14 @@ if ($conn->connect_error) {
     die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
 }
 
+// Session starten
+session_start();
+
+// Ursprungsseite speichern (falls nicht bereits gesetzt)
+if (isset($_SERVER['HTTP_REFERER']) && !isset($_SESSION['referrer']) && strpos($_SERVER['HTTP_REFERER'], 'login.php') === false) {
+    $_SESSION['referrer'] = $_SERVER['HTTP_REFERER'];
+}
+
 // Funktion zum Validieren von Eingaben
 function validate_input($data) {
     return htmlspecialchars(stripslashes(trim($data)));
@@ -64,8 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssss", $firstname, $name, $username, $email, $password_hash);
 
         if ($stmt->execute()) {
+            // Erfolgreiche Registrierung
             echo "<script>alert('Registrierung erfolgreich! Sie können sich jetzt einloggen.');</script>";
-            header("Location: login.php"); // Weiterleitung zur Login-Seite
+            $redirect_url = isset($_SESSION['referrer']) ? $_SESSION['referrer'] : 'login.php';
+            unset($_SESSION['referrer']);
+            header("Location: $redirect_url");
             exit();
         } else {
             $errors[] = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
@@ -76,7 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
